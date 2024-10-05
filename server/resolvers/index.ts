@@ -1,8 +1,13 @@
 // Resolvers define how to fetch the types defined in your schema.
-// This resolver retrieves books from the "books" array above.
+
+import { DateObject } from "../../models";
+import { dbGetNewsByMonth } from "../database";
+
 export const resolvers = {
   Query: {
-    books: () => books,
+    GetNewsByMonth: async (_, input: DateObject) => {
+      return await dbGetNewsByMonth(input.month, input.year);
+    },
   },
 };
 

@@ -1,38 +1,63 @@
 import { useState } from "react";
-import { gql, useQuery } from "@apollo/client";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
+import { Button, Form } from "react-bootstrap";
+import { useGetNewsByMonth } from "../hooks/index";
 import "./App.css";
+import CollectButton from "./components/CollectButton";
+
+const today = new Date();
+const months = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
+];
+
+const years = Array.from(
+  { length: today.getFullYear() - 1850 },
+  (_, i) => i + 1851
+);
 
 function App() {
-  const [count, setCount] = useState(0);
-  const { loading, error, data } = useQuery(gql`
-    query ExampleQuery {
-      books {
-        title
-      }
-    }
-  `);
-
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error :(</p>;
-  const books = data.books;
-  console.log("books: ", books);
+  const [year, setYear] = useState(today.getFullYear());
+  const [month, setMonth] = useState(today.getMonth());
+  console.log("nubmers:", month, year);
 
   return (
     <>
-      <h1>ViteJS Front End, Apollo/Graphql Back End</h1>
+      <h1>Infoarchivophonography</h1>
       <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
+        <Form.Select
+          onChange={(e) => setMonth(Number(e.target.value))}
+          defaultValue={month}
+        >
+          {months.map((m, i) => (
+            <option key={i} value={i}>
+              {m}
+            </option>
+          ))}
+        </Form.Select>
+        <Form.Select
+          onChange={(e) => setYear(Number(e.target.value))}
+          defaultValue={year}
+        >
+          {years.map((m, i) => (
+            <option key={i} value={m}>
+              {m}
+            </option>
+          ))}
+        </Form.Select>
       </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <div>
+        <CollectButton month={month} year={year} />
+      </div>
     </>
   );
 }
