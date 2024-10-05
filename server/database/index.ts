@@ -16,18 +16,17 @@ export async function dbGetNewsByMonth(month: number, year: number) {
   } catch (err) {
     console.log("error getting news: ", err, process.env.VITE_NYT_API_KEY);
   }
-  const alphabeticalOrder = deepExtractAndSort(
-    news.data.response.docs
-  );
+  const alphabeticalOrder = deepExtractAndSort(news.data.response.docs);
   const writeObj = { sorted: alphabeticalOrder };
   const filepath = path.join(process.cwd(), "/logs/sortedNews.json");
+  const filepath2 = path.join(process.cwd(), "/logs/newsResponse.json");
   fs.writeFile(filepath, JSON.stringify(writeObj), function (err) {
     if (err) {
       return console.log(err);
     }
     console.log("The sorted file was saved!");
   });
-  fs.writeFile(filepath, JSON.stringify(news.data), function (err) {
+  fs.writeFile(filepath2, JSON.stringify(news.data), function (err) {
     if (err) {
       return console.log(err);
     }
