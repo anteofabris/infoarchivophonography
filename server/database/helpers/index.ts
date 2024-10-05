@@ -13,7 +13,7 @@ export function deepExtractAndSort(docs: Array<any>) {
     .join()
     .replace(/["'’‘(),”“]/g, "")
     .split(/[!.?:;](?=\s)/g); // clean all commas, apostrophes and quotes
-  operation = operation.map((s) => s.trim()); // trim whitespace
+  operation = operation.map((s) => s.trim().toLowerCase()); // trim whitespace and make lowercase
   operation = operation.filter((s) => s.length > 5); // remove strings that would be musically too uninteresting
   operation = operation.sort(); // sort the strings
   return operation;
