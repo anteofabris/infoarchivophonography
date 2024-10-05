@@ -21,7 +21,7 @@ function App() {
 
   return (
     <>
-      <h1>Infoarchivophone</h1>
+      <h1>ViteJS Front End, Apollo/Graphql Back End</h1>
       <div className="card">
         <button onClick={() => setCount((count) => count + 1)}>
           count is {count}
