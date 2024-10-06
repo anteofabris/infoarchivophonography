@@ -2,11 +2,13 @@
 // that together define the "shape" of queries that are executed against
 // your data.
 export const typeDefs = `
-  type News {
-    data: String
-  }
+  scalar LoopControl
 
   type Query {
-    GetNewsByMonth(month: Int!, year: Int!): [News]
+    GetNewsByMonth(month: Int!, year: Int!): [String]
+  }
+  type Mutation {
+    PlayData(data: [String], startingIndex: Int): LoopControl
+    Stop(loopControl: LoopControl): Int
   }
 `;

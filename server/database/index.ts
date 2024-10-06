@@ -1,8 +1,9 @@
 import axios from "axios";
 import fs from "fs";
 import path from "path";
-import { fileURLToPath } from "url";
-import { deepExtractAndSort, extractAndSort } from "./helpers";
+import { deepExtractAndSort } from "./helpers";
+import { playPhrase } from "../../src/synth";
+import { createAsyncLoop } from "../../src/synth/loop";
 
 export async function dbGetNewsByMonth(month: number, year: number) {
   // month is 0-indexed, so we will add 1 here
@@ -33,5 +34,18 @@ export async function dbGetNewsByMonth(month: number, year: number) {
     console.log("The data was saved!");
   });
   console.log("docs length: ", news.data.response.docs.length);
-  return [{ data: "Hello, world!" }];
+  return alphabeticalOrder;
+}
+
+export async function dbPlayData(data: string[], startingIndex: number) {
+  // start a loop with a stop method
+  // let loop = createAsyncLoop(playPhrase, data, startingIndex, 1000, 2000);
+  // loop.start();
+
+  // // return the stop method
+  // return loop;
+}
+
+export async function dbStop(loop: any) {
+  return loop.stop();
 }

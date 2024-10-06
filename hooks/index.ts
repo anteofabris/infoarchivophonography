@@ -2,9 +2,7 @@ import { gql, useLazyQuery } from "@apollo/client";
 
 export const GET_NEWS = gql`
   query GetNews($month: Int!, $year: Int!) {
-    GetNewsByMonth(month: $month, year: $year) {
-     data
-    }
+    GetNewsByMonth(month: $month, year: $year)
   }
 `;
 

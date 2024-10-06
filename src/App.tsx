@@ -1,3 +1,4 @@
+import * as Tone from "tone";
 import { useState } from "react";
 import { Button, Form } from "react-bootstrap";
 import { useGetNewsByMonth } from "../hooks/index";
@@ -28,6 +29,7 @@ const years = Array.from(
 function App() {
   const [year, setYear] = useState(today.getFullYear());
   const [month, setMonth] = useState(today.getMonth());
+  const [startIndex, setStartIndex] = useState(0);
   console.log("nubmers:", month, year);
 
   return (
@@ -56,7 +58,7 @@ function App() {
         </Form.Select>
       </div>
       <div>
-        <CollectButton month={month} year={year} />
+        <CollectButton month={month} year={year} startIndex={startIndex} />
       </div>
     </>
   );
