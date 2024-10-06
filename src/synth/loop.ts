@@ -2,19 +2,28 @@ export function createAsyncLoop(
   callback: any,
   array: string[],
   startingIndex: number,
-  minDelay: number,
-  maxDelay: number
+  sentenceSpacelength: number,
+  wordSpaceLength: number,
+  letterSpaceLength: number,
 ): { start: () => void; stop: () => void } {
-  console.log('createAsyncLoop: ', array.length)
+  console.log("createAsyncLoop: ", array.length);
   let active = true;
-  let delay: number;
   let index: number = startingIndex;
   const loop = async () => {
     while (active) {
-      delay = Math.random() * (maxDelay - minDelay) + minDelay;
-      await callback(array[index], 3, 3); // Wait for the async callback to complete
-      await new Promise((resolve) => setTimeout(resolve, delay)); // Delay between iterations
-      index = (index + 1) % array.length
+      // delay = Math.random() * (maxDelay - minDelay) + minDelay;
+      // delay is delay plus time to complete current sentence
+      let currentPhrase = array[index];
+      let wordSpaces = currentPhrase.split(" ").length;
+      let letterSpaces = currentPhrase
+        .split(" ")
+        .reduce((acc, s) => acc + s.length, 0);
+      let phraseLength =
+        wordSpaces * wordSpaceLength + letterSpaces * letterSpaceLength;
+        console.log('phraselength: ', phraseLength)
+      await callback(array[index], sentenceSpacelength, wordSpaceLength, letterSpaceLength); // Wait for the async callback to complete
+      await new Promise((resolve) => setTimeout(resolve, phraseLength)); // Delay between iterations
+      index = (index + 1) % array.length;
     }
   };
 

@@ -2,7 +2,7 @@ import * as Tone from "tone";
 import { synthPitches, alphabet } from "./alphabetSynth";
 
 // // Instantiate PolySynth
-const synth = new Tone.PolySynth(Tone.Synth).toDestination();
+const synth = new Tone.PolySynth().toDestination();
 const now = Tone.now();
 // if preferred, set the attributes across all the voices using 'set'
 // synth.set({ detune: -1200 });
@@ -10,13 +10,20 @@ const now = Tone.now();
 //*** SYNCHRONOUS FUNCTIONS ***//
 
 // play a note (letter)
-function playNote(letter: string, duration: number, offset: number) {
-  synth.triggerAttackRelease(
-    synthPitches[alphabet.indexOf(letter)],
-    duration,
-    now + offset
-  );
-  return null;
+function playNote(
+  letter: string,
+  wordSpaceDuration: number,
+  letterSpaceDuration: number
+) {
+  synth.triggerAttackRelease(synthPitches[alphabet.indexOf(letter)], 1, now);
+}
+
+function getPitches(word: string) {
+  return word.split("").map((l) => synthPitches[alphabet.indexOf(l)]);
+}
+
+function playNotes(chord: number[]) {
+  synth.triggerAttackRelease(chord, "8n", now);
 }
 
 function durationUnit(num: number) {
@@ -27,13 +34,8 @@ function incrementationUnit(num: number) {
   return num;
 }
 // play a chord (word)
-function playChord(word: string, duration: number, startingOffset: number) {
-  // for each letter in word, play the note
-  // durations increase, so longer words become more sprawled out
-  for (let i = 0; i < word.length; i++) {
-    playNote(word[i], duration, startingOffset + durationUnit(i));
-  }
-  return null;
+function playChord(word: string) {
+  playNotes(getPitches(word));
 }
 
 //*** ASYNCHRONOUS FUNCTIONS ***//
@@ -48,23 +50,22 @@ const asyncTimeout = (ms: number) => {
 // play a phrase of chords (sentence)
 async function playPhrase(
   sentence: string,
-  duration: number,
-  offset: number,
-  spaceDuration: number
+  sentenceSpaceDuration: number,
+  wordSpaceDuration: number,
+  letterSpaceDuration: number
 ) {
-  console.log('playPhrase: ', sentence)
+  console.log("playPhrase: ", sentence);
   // split sentence into words
   const words = sentence.split(" ");
-  const space = async () => await asyncTimeout(spaceDuration * 1000);
+  const space = async () => await asyncTimeout(wordSpaceDuration);
   // recursive async function to play words with spaces in between
-  async function recursiveWordPlay(wordArray: string[]) {
+  async function recursiveWordPlay(wordArray: string[], space: any) {
     if (!wordArray.length) return;
-    playChord(words[0], duration, offset);
+    playChord(wordArray[0]);
     await space();
-    return await recursiveWordPlay(wordArray.splice(1));
+    return await recursiveWordPlay(wordArray.splice(1), space);
   }
-  return await recursiveWordPlay(words);
+  return await recursiveWordPlay(words, space);
 }
-
 
 export { playPhrase };

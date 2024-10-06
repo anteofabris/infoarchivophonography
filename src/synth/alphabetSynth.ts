@@ -37,7 +37,7 @@ const alphabet: string[] = [
   "z",
 ];
 
-const frequencyRange: number[] = [20, 20000];
+const frequencyRange: number[] = [220, 20000];
 
 const normalize = (x: number, xRange: number[], newRange: number[]) => {
   const a = newRange[0];
