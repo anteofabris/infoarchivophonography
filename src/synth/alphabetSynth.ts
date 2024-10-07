@@ -80,4 +80,4 @@ function generateFrequencies(alphabetArray: string[], freqRange: number[]) {
 
 const synthPitches = generateFrequencies(alphabet, frequencyRange);
 
-export { synthPitches, alphabet };
+export { synthPitches, alphabet, frequencyRange };

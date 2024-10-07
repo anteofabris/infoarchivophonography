@@ -36,3 +36,4 @@ export function getLetterIndexes(sentences: string[]) {
   }
   return result;
 }
+

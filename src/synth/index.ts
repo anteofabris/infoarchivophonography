@@ -1,6 +1,6 @@
 import * as Tone from "tone";
-import { synthPitches, alphabet } from "./alphabetSynth";
-import { posix } from "node:path/posix";
+import { synthPitches, alphabet, frequencyRange } from "./alphabetSynth";
+import { applyDeviation } from "./helpers";
 
 // // // Instantiate PolySynth, add params
 // const synth = new Tone.PolySynth(Tone.Synth, {
@@ -27,7 +27,6 @@ for (let k = 0; k < alphabet.length; k++) {
     },
   }).toDestination();
 }
-console.log("SYNTH: ", synth);
 //*** SYNCHRONOUS FUNCTIONS ***//
 
 function getPitch(letter: string) {
@@ -36,11 +35,17 @@ function getPitch(letter: string) {
 
 // play a note (letter)
 async function playNote(synth: any, note: number, index: number) {
+  const deviatedNote = applyDeviation(
+    frequencyRange[0],
+    frequencyRange[1],
+    note,
+    2
+  );
   const time = index * 0.01; // will use index to elongate attack time per word
   const velocity = Math.random() * (0.7 - -0.5) + -0.5; // -1 = minVelocity for now
   if (synth) {
     synth.triggerRelease();
-    synth.triggerAttack(note, undefined, velocity);
+    synth.triggerAttack(deviatedNote, undefined, velocity);
   }
   asyncTimeout(time);
   return;
