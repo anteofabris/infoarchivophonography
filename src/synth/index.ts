@@ -21,10 +21,14 @@ function getPitches(word: string) {
 }
 
 // play a note (letter)
-function playNote(
-  letter: string,
-) {
-  synth.triggerAttackRelease(synthPitches[alphabet.indexOf(letter)], 3);
+function playNote(letter: string) {
+  const velocity = Math.random() * (0.7 - -0.5) + -0.5; // -1 = minVelocity for now
+  synth.triggerAttackRelease(
+    synthPitches[alphabet.indexOf(letter)],
+    3,
+    undefined,
+    velocity
+  );
 }
 
 function playNotes(chord: number[]) {
