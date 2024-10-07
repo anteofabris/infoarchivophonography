@@ -34,6 +34,5 @@ export function getLetterIndexes(sentences: string[]) {
       // result.push({ [alph[i]]: presentLetters[alph[i]] });
       result.push([alph[i], presentLetters[alph[i]]]);
   }
-  console.log("indeces:", result, result.length);
   return result;
 }

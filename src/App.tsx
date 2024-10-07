@@ -30,7 +30,6 @@ function App() {
   const [year, setYear] = useState(today.getFullYear());
   const [month, setMonth] = useState(today.getMonth());
   const [startIndex, setStartIndex] = useState(0);
-  console.log("nubmers:", month, year);
 
   return (
     <>
