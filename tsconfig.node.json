@@ -5,6 +5,9 @@
     "module": "ESNext",
     "skipLibCheck": true,
 
+    // for test data
+    "resolveJsonModule": true,
+
     /* Bundler mode */
     "moduleResolution": "bundler",
     "allowImportingTsExtensions": true,
