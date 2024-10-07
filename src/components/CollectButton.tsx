@@ -14,7 +14,7 @@ export default function CollectButton({
   startIndex: number;
 }) {
   async function handlePlay(arr: string[]) {
-    loop = createAsyncLoop(playPhrase, arr, startIndex, 6000, 500);
+    loop = createAsyncLoop(playPhrase, arr, startIndex, 12000, 1000);
     loop.start();
   }
 

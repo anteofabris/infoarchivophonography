@@ -21,9 +21,9 @@ for (let k = 0; k < alphabet.length; k++) {
       attack: 0,
       decay: 7,
       release: 0,
-      sustain: 0,
+      sustain: 0.025,
       decayCurve: "linear",
-      releaseCurve: "linear",
+      releaseCurve: "exponential",
     },
   }).toDestination();
 }
@@ -42,6 +42,7 @@ async function playNote(synth: any, note: number, index: number) {
     synth.triggerRelease();
     synth.triggerAttack(note, undefined, velocity);
   }
+  asyncTimeout(time);
   return;
 }
 
