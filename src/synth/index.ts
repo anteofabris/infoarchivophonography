@@ -6,7 +6,7 @@ import { posix } from "node:path/posix";
 const synth = new Tone.PolySynth(Tone.Synth).toDestination();
 synth.set({
   envelope: {
-    attack: 0.1,
+    attack: 0,
     decay: 1,
     release: 0.2,
   },
@@ -55,24 +55,22 @@ const asyncTimeout = (ms: number) => {
 };
 
 // play a phrase of chords (sentence)
-async function playPhrase(
-  sentence: string,
-  sentenceSpaceDuration: number,
-  wordSpaceDuration: number,
-  letterSpaceDuration: number
-) {
+async function playPhrase(sentence: string, wordSpaceDuration: number) {
   console.log("playPhrase: ", sentence);
   // split sentence into words
   const words = sentence.split(" ");
-  const space = async () => await asyncTimeout(wordSpaceDuration);
+  const space = async (dur: number) => {
+    const delay = Math.random() * (dur - 0) + 0; // 0 = minDelay for now
+    await asyncTimeout(delay);
+  };
   // recursive async function to play words with spaces in between
-  async function recursiveWordPlay(wordArray: string[], space: any) {
+  async function recursivePlayWord(wordArray: string[], space: any) {
     if (!wordArray.length) return;
     playChord(wordArray[0]);
-    await space();
-    return await recursiveWordPlay(wordArray.splice(1), space);
+    await space(wordSpaceDuration);
+    return await recursivePlayWord(wordArray.splice(1), space);
   }
-  return await recursiveWordPlay(words, space);
+  return await recursivePlayWord(words, space);
 }
 
 export { playPhrase };

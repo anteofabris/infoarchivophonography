@@ -1,10 +1,5 @@
-import axios from "axios";
-import fs from "fs";
-import path from "path";
 import { deepExtractAndSort } from "./helpers";
-import { playPhrase } from "../../src/synth";
-import { createAsyncLoop } from "../../src/synth/loop";
-import testNews from "../../logs/newsResponse.json"
+import testNews from "../../logs/newsResponse.json";
 
 export async function dbGetNewsByMonth(month: number, year: number) {
   // month is 0-indexed, so we will add 1 here
@@ -19,15 +14,15 @@ export async function dbGetNewsByMonth(month: number, year: number) {
   //   console.log("error getting news: ", err, process.env.VITE_NYT_API_KEY);
   // }
   const alphabeticalOrder = deepExtractAndSort(testNews.response.docs);
-  const writeObj = { sorted: alphabeticalOrder };
-  const filepath = path.join(process.cwd(), "/logs/sortedNews.json");
+  // const writeObj = { sorted: alphabeticalOrder };
+  // const filepath = path.join(process.cwd(), "/logs/sortedNews.json");
   // const filepath2 = path.join(process.cwd(), "/logs/newsResponse.json");
-  fs.writeFile(filepath, JSON.stringify(writeObj), function (err) {
-    if (err) {
-      return console.log(err);
-    }
-    console.log("The sorted file was saved!");
-  });
+  // fs.writeFile(filepath, JSON.stringify(writeObj), function (err) {
+  //   if (err) {
+  //     return console.log(err);
+  //   }
+  //   console.log("The sorted file was saved!");
+  // });
   // fs.writeFile(filepath2, JSON.stringify(news.data), function (err) {
   //   if (err) {
   //     return console.log(err);
