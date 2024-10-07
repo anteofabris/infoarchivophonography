@@ -25,14 +25,11 @@ for (let k = 0; k < alphabet.length; k++) {
       decayCurve: "linear",
       releaseCurve: "linear",
     },
-  }).toDestination()
+  }).toDestination();
 }
 console.log("SYNTH: ", synth);
 //*** SYNCHRONOUS FUNCTIONS ***//
 
-function getPitches(word: string) {
-  return word.split("").map((l) => synthPitches[alphabet.indexOf(l)]);
-}
 function getPitch(letter: string) {
   return synthPitches[alphabet.indexOf(letter)];
 }
@@ -43,30 +40,10 @@ function playNote(synth: any, note: number, index: number) {
   const velocity = Math.random() * (0.7 - -0.5) + -0.5; // -1 = minVelocity for now
   if (synth) {
     synth.triggerRelease();
-    synth.triggerAttack(
-      note,
-      0,
-      velocity
-    );
+    synth.triggerAttack(note, 0, velocity);
   }
 }
 
-function playNotes(chord: number[]) {
-  // const velocity = Math.random() * (0.7 - -0.5) + -0.5; // -1 = minVelocity for now
-  // synth.triggerAttackRelease(chord, 3, undefined, velocity);
-  for (let i = 0; i < chord.length; i++) {
-    // get the right synth
-    playNote(synth[i], chord[i], i);
-  }
-}
-
-function durationUnit(num: number) {
-  return num;
-}
-
-function incrementationUnit(num: number) {
-  return num;
-}
 // play a chord (word)
 function playChord(word: string) {
   // playNotes(getPitches(word));
@@ -75,7 +52,7 @@ function playChord(word: string) {
     let currentSynth = synth[word[i]];
     // get the pitch, play it
     let pitch = getPitch(word[i]);
-    playNote(currentSynth, pitch);
+    playNote(currentSynth, pitch, i);
   }
 }
 
@@ -90,7 +67,6 @@ const asyncTimeout = (ms: number) => {
 
 // play a phrase of chords (sentence)
 async function playPhrase(sentence: string, wordSpaceDuration: number) {
-  console.log("playPhrase: ", sentence);
   // split sentence into words
   const words = sentence.split(" ");
   const space = async (dur: number) => {
