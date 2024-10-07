@@ -35,25 +35,40 @@ function getPitch(letter: string) {
 }
 
 // play a note (letter)
-function playNote(synth: any, note: number, index: number) {
+async function playNote(synth: any, note: number, index: number) {
   const time = index * 0.01; // will use index to elongate attack time per word
   const velocity = Math.random() * (0.7 - -0.5) + -0.5; // -1 = minVelocity for now
   if (synth) {
     synth.triggerRelease();
-    synth.triggerAttack(note, 0, velocity);
+    synth.triggerAttack(note, undefined, velocity);
   }
+  return;
 }
 
 // play a chord (word)
-function playChord(word: string) {
-  // playNotes(getPitches(word));
-  for (let i = 0; i < word.length; i++) {
-    // get the synth
-    let currentSynth = synth[word[i]];
-    // get the pitch, play it
-    let pitch = getPitch(word[i]);
-    playNote(currentSynth, pitch, i);
+// function playChord(word: string) {
+//   // playNotes(getPitches(word));
+//   for (let i = 0; i < word.length; i++) {
+//     // get the synth
+//     let currentSynth = synth[word[i]];
+//     // get the pitch, play it
+//     let pitch = getPitch(word[i]);
+//     playNote(currentSynth, pitch, i);
+//   }
+// }
+
+async function recursivePlayChord(wordArr: string[], count: number = 0) {
+  if (wordArr.length === 0) {
+    return;
   }
+  let currentSynth = synth[wordArr[0]];
+  let pitch = getPitch(wordArr[0]);
+  // await new Promise((resolve) => {
+  //   playNote(currentSynth, pitch, count);
+  //   resolve;
+  // }); // Delay between iterations
+  await playNote(currentSynth, pitch, count);
+  return await recursivePlayChord(wordArr.splice(1), count + 1);
 }
 
 //*** ASYNCHRONOUS FUNCTIONS ***//
@@ -67,6 +82,7 @@ const asyncTimeout = (ms: number) => {
 
 // play a phrase of chords (sentence)
 async function playPhrase(sentence: string, wordSpaceDuration: number) {
+  console.log("playPhrase: ", sentence);
   // split sentence into words
   const words = sentence.split(" ");
   const space = async (dur: number) => {
@@ -76,7 +92,7 @@ async function playPhrase(sentence: string, wordSpaceDuration: number) {
   // recursive async function to play words with spaces in between
   async function recursivePlayWord(wordArray: string[], space: any) {
     if (!wordArray.length) return;
-    playChord(wordArray[0]);
+    await recursivePlayChord(wordArray[0].split(""));
     await space(wordSpaceDuration);
     return await recursivePlayWord(wordArray.splice(1), space);
   }
