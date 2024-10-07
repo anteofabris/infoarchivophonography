@@ -1,9 +1,16 @@
 import * as Tone from "tone";
 import { synthPitches, alphabet } from "./alphabetSynth";
+import { posix } from "node:path/posix";
 
 // // Instantiate PolySynth
-const synth = new Tone.PolySynth().toDestination();
-const now = Tone.now();
+const synth = new Tone.PolySynth(Tone.Synth).toDestination();
+synth.set({
+  envelope: {
+    attack: 0.1,
+    decay: 1,
+    release: 0.2,
+  },
+});
 // if preferred, set the attributes across all the voices using 'set'
 // synth.set({ detune: -1200 });
 
@@ -15,7 +22,7 @@ function playNote(
   wordSpaceDuration: number,
   letterSpaceDuration: number
 ) {
-  synth.triggerAttackRelease(synthPitches[alphabet.indexOf(letter)], 1, now);
+  synth.triggerAttackRelease(synthPitches[alphabet.indexOf(letter)], 1);
 }
 
 function getPitches(word: string) {
@@ -23,7 +30,7 @@ function getPitches(word: string) {
 }
 
 function playNotes(chord: number[]) {
-  synth.triggerAttackRelease(chord, "8n", now);
+  synth.triggerAttackRelease(chord, 1);
 }
 
 function durationUnit(num: number) {

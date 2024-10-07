@@ -11,10 +11,8 @@ export function createAsyncLoop(
   let index: number = startingIndex;
   const loop = async () => {
     while (active) {
-      // delay = Math.random() * (maxDelay - minDelay) + minDelay;
-      // delay is delay plus time to complete current sentence
       let currentPhrase = array[index];
-      let wordSpaces = currentPhrase.split(" ").length;
+      let wordSpaces = currentPhrase.split(" ").length - 1;
       let letterSpaces = currentPhrase
         .split(" ")
         .reduce((acc, s) => acc + s.length, 0);

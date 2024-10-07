@@ -35,6 +35,7 @@ function App() {
   return (
     <>
       <h1>Infoarchivophonography</h1>
+      {/* <h2>"When reading the news isn't enough"</h2> */}
       <div className="card">
         <Form.Select
           onChange={(e) => setMonth(Number(e.target.value))}
