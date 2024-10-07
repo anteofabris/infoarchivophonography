@@ -1,4 +1,4 @@
-import { deepExtractAndSort } from "./helpers";
+import { deepExtractAndSort, getLetterIndexes } from "./helpers";
 import testNews from "../../logs/newsResponse.json";
 
 export async function dbGetNewsByMonth(month: number, year: number) {
@@ -14,6 +14,7 @@ export async function dbGetNewsByMonth(month: number, year: number) {
   //   console.log("error getting news: ", err, process.env.VITE_NYT_API_KEY);
   // }
   const alphabeticalOrder = deepExtractAndSort(testNews.response.docs);
+  const letterIndexes = getLetterIndexes(alphabeticalOrder);
   // const writeObj = { sorted: alphabeticalOrder };
   // const filepath = path.join(process.cwd(), "/logs/sortedNews.json");
   // const filepath2 = path.join(process.cwd(), "/logs/newsResponse.json");
@@ -29,7 +30,7 @@ export async function dbGetNewsByMonth(month: number, year: number) {
   //   }
   //   console.log("The data was saved!");
   // });
-  return alphabeticalOrder;
+  return { phrases: alphabeticalOrder, startingIndexes: letterIndexes };
 }
 
 export async function dbPlayData(data: string[], startingIndex: number) {

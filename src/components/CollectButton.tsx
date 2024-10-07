@@ -1,18 +1,18 @@
-import { Button } from "react-bootstrap";
+import { Button, Form } from "react-bootstrap";
 import { useGetNewsByMonth } from "../../hooks";
 import { playPhrase } from "../synth";
 import { createAsyncLoop } from "../synth/loop";
+import { useState } from "react";
 let loop: any;
 
 export default function CollectButton({
   month,
   year,
-  startIndex,
 }: {
   month: number;
   year: number;
-  startIndex: number;
 }) {
+  const [startIndex, setStartIndex] = useState(0);
   async function handlePlay(arr: string[]) {
     loop = createAsyncLoop(playPhrase, arr, startIndex, 12000, 1000);
     loop.start();
@@ -45,9 +45,21 @@ export default function CollectButton({
       </Button>
     );
   console.log("dataL ", data);
+  const phrases = data.GetNewsByMonth.phrases;
+  const startingIndexes = data.GetNewsByMonth.startingIndexes;
   return (
     <>
-      <Button variant="primary" onClick={() => handlePlay(data.GetNewsByMonth)}>
+      <Form.Select
+        onChange={(e) => setStartIndex(Number(e.target.value))}
+        defaultValue={year}
+      >
+        {startingIndexes.map((index: any) => (
+          <option key={index[0]} value={index[1]}>
+            {index[0]}
+          </option>
+        ))}
+      </Form.Select>
+      <Button variant="primary" onClick={() => handlePlay(phrases)}>
         Play News
       </Button>
       <Button variant="primary" onClick={() => handleStop()}>

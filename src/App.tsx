@@ -59,7 +59,7 @@ function App() {
         </Form.Select>
       </div>
       <div>
-        <CollectButton month={month} year={year} startIndex={startIndex} />
+        <CollectButton month={month} year={year} />
       </div>
     </>
   );

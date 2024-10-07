@@ -3,9 +3,15 @@
 // your data.
 export const typeDefs = `
   scalar LoopControl
+  scalar AlphIndex
+
+  type News {
+    phrases: [String]
+    startingIndexes: [AlphIndex]
+  }
 
   type Query {
-    GetNewsByMonth(month: Int!, year: Int!): [String]
+    GetNewsByMonth(month: Int!, year: Int!): News
   }
   type Mutation {
     PlayData(data: [String], startingIndex: Int): LoopControl
