@@ -11,7 +11,7 @@ export const resolvers = {
   },
   Mutation: {
     PlayData: async (_, input: any) => {
-      console.log("play mutation!", input);
+      console.log("play mutation!",);
       const loop = await dbPlayData(input.data, input.startingIndex);
       return loop;
     },
