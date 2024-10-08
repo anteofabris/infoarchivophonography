@@ -64,6 +64,7 @@ function getPitch(letter: string) {
 
 // play a note (letter)
 async function playNote(synth: any, note: number, index: number) {
+  const now = Tone.now();
   const randomDeviation = Math.random() * (3 - 0) + 0;
   const deviatedNote = applyDeviation(
     frequencyRange[0],
@@ -71,12 +72,12 @@ async function playNote(synth: any, note: number, index: number) {
     note,
     randomDeviation
   );
-  const time = index * 0.01; // will use index to elongate attack time per word
+  const time = index * 0.05; // will use index to elongate attack time per word
   const velocity = Math.random() * (0.7 - -0.5) + -0.5; // -1 = minVelocity for now
   if (synth) {
     try {
       synth.triggerRelease();
-      synth.triggerAttack(deviatedNote, undefined, velocity);
+      synth.triggerAttack(deviatedNote, now + time, velocity);
     } catch (err) {
       console.log("error triggering: ", err);
     }

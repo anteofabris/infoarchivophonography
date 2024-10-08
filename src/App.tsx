@@ -30,11 +30,16 @@ function App() {
   const [year, setYear] = useState(today.getFullYear());
   const [month, setMonth] = useState(today.getMonth());
   const [startIndex, setStartIndex] = useState(0);
+  const [sentence, setSentence] = useState("");
 
   return (
     <>
       <h1>Infoarchivophonography</h1>
       {/* <h2>"When reading the news isn't enough"</h2> */}
+      <h4>
+        <i>"...{sentence}..."</i>
+      </h4>
+
       <div className="card">
         <Form.Select
           onChange={(e) => setMonth(Number(e.target.value))}
@@ -58,7 +63,12 @@ function App() {
         </Form.Select>
       </div>
       <div>
-        <CollectButton month={month} year={year} />
+        <CollectButton
+          month={month}
+          year={year}
+          sentence={sentence}
+          setSentence={setSentence}
+        />
       </div>
     </>
   );

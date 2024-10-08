@@ -8,13 +8,17 @@ let loop: any;
 export default function CollectButton({
   month,
   year,
+  sentence,
+  setSentence,
 }: {
   month: number;
   year: number;
+  sentence: string,
+  setSentence: Function
 }) {
   const [startIndex, setStartIndex] = useState(0);
   const [playing, setPlaying] = useState(false);
-  const [sentence, setSentence] = useState("");
+  // const [sentence, setSentence] = useState("");
   async function handlePlay(arr: string[]) {
     loop = createAsyncLoop(
       playPhrase,
@@ -63,7 +67,7 @@ export default function CollectButton({
       <Form.Select
         onChange={(e) => setStartIndex(Number(e.target.value))}
         defaultValue={year}
-      >
+        >
         {startingIndexes.map((index: any) => (
           <option key={index[0]} value={index[1]}>
             {index[0]}
@@ -74,17 +78,16 @@ export default function CollectButton({
         variant="primary"
         onClick={() => handlePlay(phrases)}
         disabled={playing}
-      >
+        >
         {playing ? "Playing" : "Play News"}
       </Button>
       <Button
         variant="primary"
         onClick={() => handleStop()}
         disabled={!playing}
-      >
+        >
         Stop
       </Button>
-      <h4>{sentence}</h4>
     </>
   );
 }
