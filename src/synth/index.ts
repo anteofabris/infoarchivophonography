@@ -3,29 +3,58 @@ import { synthPitches, alphabet, frequencyRange } from "./alphabetSynth";
 import { applyDeviation } from "./helpers";
 
 // // // Instantiate PolySynth, add params
-// const synth = new Tone.PolySynth(Tone.Synth, {
-// volume: -20,
-// envelope: {
-//   attack: 0,
-//   decay: 7,
-//   release: 7,
-//   decayCurve: "exponential",
-//   releaseCurve: "exponential",
-// },
-// }).toDestination();
 let synth: any = {};
 for (let k = 0; k < alphabet.length; k++) {
-  synth[alphabet[k]] = new Tone.Synth({
+  synth[alphabet[k]] = new Tone.MembraneSynth({
     volume: -20,
+    pitchDecay: 0,
+    octaves: 10,
+    oscillator: {
+      type: "sine",
+    },
     envelope: {
-      attack: 0,
+      attack: 0.001,
       decay: 7,
-      release: 0,
       sustain: 0.025,
+      release: 0,
       decayCurve: "linear",
-      releaseCurve: "exponential",
+      attackCurve: "exponential",
     },
   }).toDestination();
+
+  // synth[alphabet[k]] = new Tone.PluckSynth({
+  //   attackNoise: 1,
+  //   dampening: 1000,
+  //   resonance: 1,
+  // }).toDestination();
+
+  // synth[alphabet[k]] = new Tone.MetalSynth({
+  //   volume: -20,
+  //   envelope: {
+  //     attack: 0.001,
+  //     decay: 12,
+  //     release: 0,
+  //     sustain: 0.025,
+  //     decayCurve: "linear",
+  //     releaseCurve: "linear",
+  //   },
+  //   harmonicity: 0,
+  //   modulationIndex: 32,
+  //   resonance: 10,
+  //   octaves: 1.5,
+  // }).toDestination();
+
+  // synth[alphabet[k]] = new Tone.Synth({
+  //   volume: -20,
+  //   envelope: {
+  //     attack: 0,
+  //     decay: 7,
+  //     release: 0,
+  //     sustain: 0.025,
+  //     decayCurve: "linear",
+  //     releaseCurve: "exponential",
+  //   },
+  // }).toDestination();
 }
 //*** SYNCHRONOUS FUNCTIONS ***//
 
@@ -35,17 +64,22 @@ function getPitch(letter: string) {
 
 // play a note (letter)
 async function playNote(synth: any, note: number, index: number) {
+  const randomDeviation = Math.random() * (3 - 0) + 0;
   const deviatedNote = applyDeviation(
     frequencyRange[0],
     frequencyRange[1],
     note,
-    2
+    randomDeviation
   );
   const time = index * 0.01; // will use index to elongate attack time per word
   const velocity = Math.random() * (0.7 - -0.5) + -0.5; // -1 = minVelocity for now
   if (synth) {
-    synth.triggerRelease();
-    synth.triggerAttack(deviatedNote, undefined, velocity);
+    try {
+      synth.triggerRelease();
+      synth.triggerAttack(deviatedNote, undefined, velocity);
+    } catch (err) {
+      console.log("error triggering: ", err);
+    }
   }
   asyncTimeout(time);
   return;
