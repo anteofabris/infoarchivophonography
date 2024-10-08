@@ -13,13 +13,17 @@ export default function CollectButton({
   year: number;
 }) {
   const [startIndex, setStartIndex] = useState(0);
+  const [playing, setPlaying] = useState(false);
   async function handlePlay(arr: string[]) {
     loop = createAsyncLoop(playPhrase, arr, startIndex, 12000, 1000);
     loop.start();
+    setPlaying(true);
   }
 
   async function handleStop() {
+    console.log("stop: ", loop);
     if (loop) loop.stop();
+    setPlaying(false);
   }
 
   const [getNews, { called, data, loading, error }] = useGetNewsByMonth(
@@ -44,7 +48,6 @@ export default function CollectButton({
         Collect News
       </Button>
     );
-  console.log("dataL ", data);
   const phrases = data.GetNewsByMonth.phrases;
   const startingIndexes = data.GetNewsByMonth.startingIndexes;
   return (
@@ -59,10 +62,18 @@ export default function CollectButton({
           </option>
         ))}
       </Form.Select>
-      <Button variant="primary" onClick={() => handlePlay(phrases)}>
+      <Button
+        variant="primary"
+        onClick={() => handlePlay(phrases)}
+        disabled={playing}
+      >
         Play News
       </Button>
-      <Button variant="primary" onClick={() => handleStop()}>
+      <Button
+        variant="primary"
+        onClick={() => handleStop()}
+        disabled={!playing}
+      >
         Stop
       </Button>
     </>

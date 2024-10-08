@@ -5,7 +5,7 @@ export function createAsyncLoop(
   sentenceSpacelength: number,
   wordSpaceLength: number
 ): { start: () => void; stop: () => void } {
-  let active = true;
+  let active = false;
   let index: number = startingIndex;
   const loop = async () => {
     while (active) {
