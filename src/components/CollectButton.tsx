@@ -14,8 +14,16 @@ export default function CollectButton({
 }) {
   const [startIndex, setStartIndex] = useState(0);
   const [playing, setPlaying] = useState(false);
+  const [sentence, setSentence] = useState("");
   async function handlePlay(arr: string[]) {
-    loop = createAsyncLoop(playPhrase, arr, startIndex, 12000, 1000);
+    loop = createAsyncLoop(
+      playPhrase,
+      arr,
+      startIndex,
+      12000,
+      1000,
+      setSentence
+    );
     loop.start();
     setPlaying(true);
   }
@@ -67,7 +75,7 @@ export default function CollectButton({
         onClick={() => handlePlay(phrases)}
         disabled={playing}
       >
-        Play News
+        {playing ? "Playing" : "Play News"}
       </Button>
       <Button
         variant="primary"
@@ -76,6 +84,7 @@ export default function CollectButton({
       >
         Stop
       </Button>
+      <h4>{sentence}</h4>
     </>
   );
 }

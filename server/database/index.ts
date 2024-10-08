@@ -16,7 +16,7 @@ export async function dbGetNewsByMonth(month: number, year: number) {
   } catch (err) {
     console.log("error getting news: ", err, process.env.VITE_NYT_API_KEY);
   }
-  const alphabeticalOrder = deepExtractAndSort(testNews.response.docs);
+  const alphabeticalOrder = deepExtractAndSort(news.data.response.docs);
   const letterIndexes = getLetterIndexes(alphabeticalOrder);
   const writeObj = { sorted: alphabeticalOrder };
   const filepath = path.join(process.cwd(), "/logs/sortedNews.json");
