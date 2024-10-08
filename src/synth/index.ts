@@ -1,5 +1,10 @@
 import * as Tone from "tone";
-import { synthPitches, alphabet, frequencyRange } from "./alphabetSynth";
+import {
+  synthPitches,
+  synthVelocities,
+  alphabet,
+  frequencyRange,
+} from "./alphabetSynth";
 import { applyDeviation } from "./helpers";
 
 // // // Instantiate PolySynth, add params
@@ -62,6 +67,8 @@ function getPitch(letter: string) {
   return synthPitches[alphabet.indexOf(letter)];
 }
 
+//*** ASYNCHRONOUS FUNCTIONS ***//
+
 // play a note (letter)
 async function playNote(synth: any, note: number, index: number) {
   const now = Tone.now();
@@ -86,33 +93,15 @@ async function playNote(synth: any, note: number, index: number) {
   return;
 }
 
-// play a chord (word)
-// function playChord(word: string) {
-//   // playNotes(getPitches(word));
-//   for (let i = 0; i < word.length; i++) {
-//     // get the synth
-//     let currentSynth = synth[word[i]];
-//     // get the pitch, play it
-//     let pitch = getPitch(word[i]);
-//     playNote(currentSynth, pitch, i);
-//   }
-// }
-
 async function recursivePlayChord(wordArr: string[], count: number = 0) {
   if (wordArr.length === 0) {
     return;
   }
   let currentSynth = synth[wordArr[0]];
   let pitch = getPitch(wordArr[0]);
-  // await new Promise((resolve) => {
-  //   playNote(currentSynth, pitch, count);
-  //   resolve;
-  // }); // Delay between iterations
   await playNote(currentSynth, pitch, count);
   return await recursivePlayChord(wordArr.splice(1), count + 1);
 }
-
-//*** ASYNCHRONOUS FUNCTIONS ***//
 
 // play a pause (space, sentence end)
 const asyncTimeout = (ms: number) => {

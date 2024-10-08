@@ -8,12 +8,10 @@ let loop: any;
 export default function CollectButton({
   month,
   year,
-  sentence,
   setSentence,
 }: {
   month: number;
   year: number;
-  sentence: string,
   setSentence: Function
 }) {
   const [startIndex, setStartIndex] = useState(0);

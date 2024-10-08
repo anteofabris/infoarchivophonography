@@ -1,7 +1,5 @@
-import * as Tone from "tone";
 import { useState } from "react";
-import { Button, Form } from "react-bootstrap";
-import { useGetNewsByMonth } from "../hooks/index";
+import { Form } from "react-bootstrap";
 import "./App.css";
 import CollectButton from "./components/CollectButton";
 
@@ -30,15 +28,15 @@ function App() {
   const [year, setYear] = useState(today.getFullYear());
   const [month, setMonth] = useState(today.getMonth());
   const [startIndex, setStartIndex] = useState(0);
-  const [sentence, setSentence] = useState("");
+  const [sentence, setSentence] = useState(null);
 
   return (
     <>
-      <h1>Infoarchivophonography</h1>
+    {sentence === null &&  <h1>Infoarchivophonography</h1>}
       {/* <h2>"When reading the news isn't enough"</h2> */}
-      <h4>
+      {sentence !== null && <h1>
         <i>"...{sentence}..."</i>
-      </h4>
+      </h1>}
 
       <div className="card">
         <Form.Select
@@ -66,7 +64,6 @@ function App() {
         <CollectButton
           month={month}
           year={year}
-          sentence={sentence}
           setSentence={setSentence}
         />
       </div>

@@ -38,6 +38,7 @@ const alphabet: string[] = [
 ];
 
 const frequencyRange: number[] = [110, 1760];
+const velocityRange: number[] = [-1, 1]; // velocity cannot be outside of this range
 
 const normalize = (x: number, xRange: number[], newRange: number[]) => {
   const a = newRange[0];
@@ -47,22 +48,6 @@ const normalize = (x: number, xRange: number[], newRange: number[]) => {
   const res = a + ((x - minX) * (b - a)) / (maxX - minX); // normalization algorithm
   return res;
 };
-
-// function makeSynthPitches(alphabetArray: string[], freqRange: number[]) {
-//   const testFrequencies = [
-//     20.00, 24.36, 29.68, 36.16, 44.04, 53.65, 65.36, 79.62,
-//     96.99, 118.16, 143.94, 175.34, 213.60, 260.21, 316.98,
-//     386.14, 470.39, 573.02, 698.05, 850.36, 1035.89, 1261.91,
-//     1537.25, 1872.66, 2281.25, 2778.99, 3385.33, 4123.97,
-//     5023.77, 6119.90, 7455.19, 9081.82, 11063.36, 13477.25,
-//     16417.83, 20000.00
-//   ];
-//   let result: number[] = [];
-//   for (let i = 0; i < alphabetArray.length; i++) {
-//     result.push(normalize(i + 1, [1, alphabetArray.length], freqRange));
-//   }
-//   return testFrequencies;
-// }
 
 function generateFrequencies(alphabetArray: string[], freqRange: number[]) {
   // steps, startFreq, endFreq
@@ -78,6 +63,20 @@ function generateFrequencies(alphabetArray: string[], freqRange: number[]) {
   return frequencies;
 }
 
-const synthPitches = generateFrequencies(alphabet, frequencyRange);
+function generateVelocities(alphabetArray: string[], velRange: number[]) {
+  // steps, startFreq, endFreq
+  let steps = alphabetArray.length;
+  let startVel = velRange[0];
+  let endVel = velRange[1];
+  const velocities = [];
+  for (let i = 0; i < steps; i++) {
+    const velocity = startVel * Math.pow(endVel / startVel, i / (steps - 1));
+    velocities.push(velocity);
+  }
+  return velocities;
+}
 
-export { synthPitches, alphabet, frequencyRange };
+const synthPitches = generateFrequencies(alphabet, frequencyRange);
+const synthVelocities = generateVelocities(alphabet, velocityRange);
+
+export { synthPitches, alphabet, frequencyRange, synthVelocities };
