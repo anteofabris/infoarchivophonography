@@ -1,3 +1,19 @@
+# News Meditation
+
+This project uses React + TypeScript + Vite on the front end and utilizes a separate API, GraphQL to isolate external API calls and wrangle data.
+
+
+This project runs on a split terminal (two terminals). Run "npm start" to start the API server, and "npm run dev" to start the Vite (front-end) server.
+
+# Necessary Considerations
+
+* Please note that there is no daemon on the backend server, so any change to non-UI code will only reflect once the server has been restarted — sorry.
+* A New York Times API Key and Secret are required to use this code. Please see https://developer.nytimes.com/get-started to get one.
+
+
+
+
+
 # React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.

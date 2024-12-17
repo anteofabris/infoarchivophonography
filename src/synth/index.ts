@@ -1,7 +1,6 @@
 import * as Tone from "tone";
 import {
   synthPitches,
-  synthVelocities,
   alphabet,
   frequencyRange,
 } from "./alphabetSynth";
@@ -11,7 +10,7 @@ import { applyDeviation } from "./helpers";
 let synth: any = {};
 for (let k = 0; k < alphabet.length; k++) {
   synth[alphabet[k]] = new Tone.MembraneSynth({
-    volume: -20,
+    volume: -35,
     pitchDecay: 0,
     octaves: 10,
     oscillator: {
@@ -67,10 +66,19 @@ function getPitch(letter: string) {
   return synthPitches[alphabet.indexOf(letter)];
 }
 
+// function getVelocity(letter: string) {
+//   console.log("synthVeolocites: ", synthVelocities);
+//   return synthVelocities[alphabet.indexOf(letter)];
+// }
+
 //*** ASYNCHRONOUS FUNCTIONS ***//
 
 // play a note (letter)
-async function playNote(synth: any, note: number, index: number) {
+async function playNote(
+  synth: any,
+  note: number,
+  index: number
+) {
   const now = Tone.now();
   const randomDeviation = Math.random() * (3 - 0) + 0;
   const deviatedNote = applyDeviation(
@@ -99,6 +107,7 @@ async function recursivePlayChord(wordArr: string[], count: number = 0) {
   }
   let currentSynth = synth[wordArr[0]];
   let pitch = getPitch(wordArr[0]);
+  // let velocity = getVelocity(wordArr[0]);
   await playNote(currentSynth, pitch, count);
   return await recursivePlayChord(wordArr.splice(1), count + 1);
 }

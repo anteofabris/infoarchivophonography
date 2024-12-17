@@ -35,7 +35,7 @@ function App() {
     {sentence === null &&  <h1>Infoarchivophonography</h1>}
       {/* <h2>"When reading the news isn't enough"</h2> */}
       {sentence !== null && <h1>
-        <i>"...{sentence}..."</i>
+        <i>{sentence}</i>
       </h1>}
 
       <div className="card">

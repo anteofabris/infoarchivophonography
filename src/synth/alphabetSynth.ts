@@ -38,7 +38,7 @@ const alphabet: string[] = [
 ];
 
 const frequencyRange: number[] = [110, 1760];
-const velocityRange: number[] = [-1, 1]; // velocity cannot be outside of this range
+const velocityRange: number[] = [1, -1];
 
 const normalize = (x: number, xRange: number[], newRange: number[]) => {
   const a = newRange[0];
@@ -63,20 +63,13 @@ function generateFrequencies(alphabetArray: string[], freqRange: number[]) {
   return frequencies;
 }
 
-function generateVelocities(alphabetArray: string[], velRange: number[]) {
-  // steps, startFreq, endFreq
-  let steps = alphabetArray.length;
-  let startVel = velRange[0];
-  let endVel = velRange[1];
-  const velocities = [];
-  for (let i = 0; i < steps; i++) {
-    const velocity = startVel * Math.pow(endVel / startVel, i / (steps - 1));
-    velocities.push(velocity);
-  }
-  return velocities;
+function generateVelocities(synthPitches: number[]) {
+  return synthPitches.map((pitch: number) => {
+    return normalize(pitch, synthPitches, velocityRange);
+  });
 }
 
 const synthPitches = generateFrequencies(alphabet, frequencyRange);
-const synthVelocities = generateVelocities(alphabet, velocityRange);
+const synthVelocities = generateVelocities(synthPitches);
 
-export { synthPitches, alphabet, frequencyRange, synthVelocities };
+export { synthPitches, alphabet, frequencyRange };
