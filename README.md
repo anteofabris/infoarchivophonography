@@ -8,7 +8,7 @@ This project runs on a split terminal (two terminals). Run "npm start" to start 
 # Necessary Considerations
 
 * Please note that there is no daemon on the backend server, so any change to non-UI code will only reflect once the server has been restarted — sorry.
-* A New York Times API Key and Secret are required to use this code. Please see https://developer.nytimes.com/get-started to get one.
+* A New York Times API Key and Secret are required to use this code. Please see https://developer.nytimes.com/get-started to get one. Store the values in your .env folder like this: VITE_NYT_API_KEY={your-api-key} VITE_NYT_API_SECRET={your-secret}
 
 
 
