@@ -32,11 +32,13 @@ function App() {
 
   return (
     <>
-    {sentence === null &&  <h1>Infoarchivophonography</h1>}
+      {sentence === null && <h1>Infoarchivophonography</h1>}
       {/* <h2>"When reading the news isn't enough"</h2> */}
-      {sentence !== null && <h1>
-        <i>{sentence}</i>
-      </h1>}
+      {sentence !== null && (
+        <h1>
+          <i>{(sentence as any).split(" ").sort().join(" ")}</i>
+        </h1>
+      )}
 
       <div className="card">
         <Form.Select
@@ -61,11 +63,7 @@ function App() {
         </Form.Select>
       </div>
       <div>
-        <CollectButton
-          month={month}
-          year={year}
-          setSentence={setSentence}
-        />
+        <CollectButton month={month} year={year} setSentence={setSentence} />
       </div>
     </>
   );
