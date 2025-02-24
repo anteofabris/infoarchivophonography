@@ -27,7 +27,7 @@ const years = Array.from(
 function App() {
   const [year, setYear] = useState(today.getFullYear());
   const [month, setMonth] = useState(today.getMonth());
-  const [startIndex, setStartIndex] = useState(0);
+  // const [startIndex, setStartIndex] = useState(0);
   const [sentence, setSentence] = useState(null);
 
   return (

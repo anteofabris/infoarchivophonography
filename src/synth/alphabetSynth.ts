@@ -70,6 +70,6 @@ function generateVelocities(synthPitches: number[]) {
 }
 
 const synthPitches = generateFrequencies(alphabet, frequencyRange);
-const synthVelocities = generateVelocities(synthPitches);
+// const synthVelocities = generateVelocities(synthPitches);
 
 export { synthPitches, alphabet, frequencyRange };
