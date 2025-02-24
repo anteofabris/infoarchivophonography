@@ -35,7 +35,7 @@ const alphabet: string[] = [
   "x",
   "y",
   "z",
-];
+]; // if you want it going from high to low
 
 const frequencyRange: number[] = [110, 1760];
 const velocityRange: number[] = [1, -1];

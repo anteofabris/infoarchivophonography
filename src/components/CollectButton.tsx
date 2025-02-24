@@ -22,8 +22,8 @@ export default function CollectButton({
       playPhrase,
       arr,
       startIndex,
-      12000,
-      1000,
+      50, // sentenceSpaceDuration
+      2.5, // wordSpaceDuration
       setSentence
     );
     loop.start();

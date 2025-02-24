@@ -1,4 +1,4 @@
-import { deepExtractAndSort, getLetterIndexes } from "./helpers";
+import { allWordsAlphabetized, deepExtractAndSort, getLetterIndexes } from "./helpers";
 import testNews from "../../logs/newsResponse.json";
 import axios from "axios";
 import path from "path";
@@ -16,7 +16,7 @@ export async function dbGetNewsByMonth(month: number, year: number) {
   } catch (err) {
     console.log("error getting news: ", err, process.env.VITE_NYT_API_KEY);
   }
-  const alphabeticalOrder = deepExtractAndSort(news.data.response.docs);
+  const alphabeticalOrder = allWordsAlphabetized(news.data.response.docs);
   const letterIndexes = getLetterIndexes(alphabeticalOrder);
   const writeObj = { sorted: alphabeticalOrder };
   const filepath = path.join(process.cwd(), "/logs/sortedNews.json");
