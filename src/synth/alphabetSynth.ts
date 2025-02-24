@@ -63,13 +63,13 @@ function generateFrequencies(alphabetArray: string[], freqRange: number[]) {
   return frequencies;
 }
 
-// function generateVelocities(synthPitches: number[]) {
-//   return synthPitches.map((pitch: number) => {
-//     return normalize(pitch, synthPitches, velocityRange);
-//   });
-// }
+function generateVelocities(synthPitches: number[]) {
+  return synthPitches.map((pitch: number) => {
+    return normalize(pitch, synthPitches, velocityRange);
+  });
+}
 
 const synthPitches = generateFrequencies(alphabet, frequencyRange);
-// const synthVelocities = generateVelocities(synthPitches);
+const synthVelocities = generateVelocities(synthPitches);
 
-export { synthPitches, alphabet, frequencyRange };
+export { synthPitches, alphabet, frequencyRange, synthVelocities };
