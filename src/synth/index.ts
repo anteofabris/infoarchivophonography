@@ -17,12 +17,13 @@ for (let k = 0; k < alphabet.length; k++) {
       type: "sine",
     },
     envelope: {
-      attack: 0.001,
+      attack:0.5,
       decay: 7,
-      sustain: 0.025,
+      sustain: 1,
       release: 0,
       decayCurve: "linear",
       attackCurve: "exponential",
+      releaseCurve: "linear",
     },
   }).toDestination();
 
@@ -80,7 +81,8 @@ async function playNote(
   index: number
 ) {
   const now = Tone.now();
-  const randomDeviation = Math.random() * (3 - 0) + 0;
+  const randomDeviation = 0;
+  // const randomDeviation = Math.random() * (3 - 0) + 0;
   const deviatedNote = applyDeviation(
     frequencyRange[0],
     frequencyRange[1],
