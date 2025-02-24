@@ -9,12 +9,13 @@
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "start": "npm run compile && tsx ./server/server.ts"
+    "start": "concurrently \"npm run compile && tsx ./server/server.ts\" \"npm run dev\""
   },
   "dependencies": {
     "@apollo/client": "^3.11.8",
     "@apollo/server": "^4.11.0",
     "axios": "^1.7.7",
+    "concurrently": "^9.1.2",
     "dotenv": "^16.4.5",
     "graphql": "^16.9.0",
     "heroku": "^10.2.0",
